@@ -243,7 +243,6 @@ class Hodhod {
 			'after' => '</div>'
 		];
 		
-		// TODO: Document
 		$html_parts = apply_filters('hodhod_get_iframe', $html_parts);
 
 		return ($html_parts['before'] ?? '') . ($html_parts['iframe'] ?? '') . ($html_parts['after'] ?? '');
@@ -294,15 +293,15 @@ class Hodhod {
 
 // Send Diagnostics on plugin activation
 register_activation_hook( __FILE__, function () {
-	EstReadTime::I()->send_diagnostics( 'activate' );
+	Hodhod::I()->send_diagnostics( 'activate' );
 } );
 
 // Send Diagnostics on plugin deactivation
 register_deactivation_hook( __FILE__, function () {
-	EstReadTime::I()->send_diagnostics( 'deactivate' );
+	Hodhod::I()->send_diagnostics( 'deactivate' );
 } );
 // Send Diagnostics on plugin settings update
-add_action( 'update_option_' . EstReadTime::I()::ERT_SETTINGS, function () {
-	EstReadTime::I()->send_diagnostics( 'settings_update' );
+add_action( 'update_option_' . Hodhod::I()::OPTION, function () {
+	Hodhod::I()->send_diagnostics( 'settings_update' );
 } );
 

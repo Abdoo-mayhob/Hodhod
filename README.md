@@ -13,18 +13,31 @@
 **License:** GPLv2 or later  
 **License URI:** [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)    
 
-Integrate gohodhod.com services with your website
+Integrate gohodhod.com services with your website.
 
 ## Description
 
-Integrate gohodhod.com services with your website
+Integrate gohodhod.com services with your website.
+
+## Usage
+Use the shortcode [hodhod] anywhere in your website to show the form.
+Set the iframe you get from gohodhod.com to the plugin settings at Themes -> Customizer -> Hodhod.
 
 
 ## Installation
 
 1. Upload the `hodhod` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Configure the plugin by navigating to Settings -> Hodhod in the WordPress dashboard.
+3. Configure the plugin by navigating to Themes -> Customizer -> Hodhod.
+
+## Changelog
+### 1.0.0
+
+- Initial release
+
+## Frequently Asked Questions
+1. **Is this plugin an official relaeas from Hodhod ?**
+   - No, it's a personal effort from the plugin author to help site owners integrate with hodhod, especially for the arabic community.
 
 ## Data Collection
 
@@ -49,10 +62,3 @@ The data collected includes:
 This data is sent to our server. The data transmission is non-blocking and does not affect the performance of your site.
 
 We respect your privacy and handle your data with care. The data collected is used solely for diagnostic purposes and to improve the functionality and performance of this plugin. It is not shared with any third parties.
-
-## Changelog
-### 1.0.0
-
-- Initial release
-
-## Frequently Asked Questions
