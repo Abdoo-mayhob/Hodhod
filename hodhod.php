@@ -28,7 +28,9 @@
  * ===================================================================
  * 
  * TODO:
- * -
+ * - Readme
+ * - Plugin check
+ * - placers other than shortcode
  */
 
 // If this file is called directly, abort.
@@ -95,7 +97,14 @@ class Hodhod {
 	// --------------------------------------------------------------------------------------
 	// Admin Menu
 
-	public function customizer( $wp_customize ) {
+	public function customizer( WP_Customize_Manager $wp_customize ) {
+
+		// Add pen icon above section (Selective Refresh Partial)
+		$wp_customize->selective_refresh->add_partial( self::OPTION . '[iframe]',[
+			'settings' => [self::OPTION . '[iframe]' , self::OPTION . '[show_profile]' , self::OPTION . '[dark_mode]'],
+			'selector' => '.hodhod',
+			'container_inclusive' => true
+		] );
 
 
 		$wp_customize->add_section( 'hodhod_section', [ 
@@ -142,6 +151,22 @@ class Hodhod {
 			'section' => 'hodhod_section',
 			'type' => 'checkbox',
 		] );
+
+		// Message under the fields
+		$wp_customize->add_setting('iframe_message', [
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
+		]);
+		$wp_customize->add_control(new WP_Customize_Control(
+			$wp_customize,
+			'iframe_message',
+			[
+				'description' => '<h4 style="color: red;">' . __('Please Refresh the Customizer to see changes.', 'hodhod') . '</h4>',
+				'label' => '',
+				'section' => 'hodhod_section',
+				'type' => 'hidden',
+			]
+		));
+
 	}
 
 	// --------------------------------------------------------------------------------------
@@ -185,7 +210,7 @@ class Hodhod {
 
 		$iframe = $iframe->item( 0 );
 		$src = $iframe->getAttribute( 'src' );
-		ldd( $src, 'src' );
+
 		// Parse the URL and query string
 		$url_parts = parse_url( $src );
 
@@ -193,7 +218,6 @@ class Hodhod {
 		if ( ! ( isset( $url_parts['host'] ) && $url_parts['host'] === 'gohodhod.com' ) ) {
 			return false;
 		}
-		ldd( $url_parts, 'url_parts' );
 
 		parse_str( $url_parts['query'], $params );
 
@@ -213,7 +237,16 @@ class Hodhod {
 		// Save the modified HTML
 		$new_iframe = $doc->saveHTML( $iframe );
 
-		return $new_iframe;
+		$html_parts = [
+			'before' => '<div class="hodhod">',
+			'iframe' => $new_iframe,
+			'after' => '</div>'
+		];
+		
+		// TODO: Document
+		$html_parts = apply_filters('hodhod_get_iframe', $html_parts);
+
+		return ($html_parts['before'] ?? '') . ($html_parts['iframe'] ?? '') . ($html_parts['after'] ?? '');
 	}
 
 	// --------------------------------------------------------------------------------------
